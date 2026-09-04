@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<<!DOCTYPE html>
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
@@ -1014,3 +1014,51 @@
         });
         nickInput.addEventListener('keydown', (e) => {
             if (e.key === 'Enter') msgInput.focus();
+        });
+
+        adminToggleBtn.addEventListener('click', toggleAdminMode);
+        adminLoginBtn.addEventListener('click', loginAdmin);
+        adminModalClose.addEventListener('click', () => adminModal.style.display = 'none');
+        adminPassword.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter') loginAdmin();
+        });
+        window.addEventListener('click', (e) => {
+            if (e.target === adminModal) adminModal.style.display = 'none';
+            if (e.target === muteModal) muteModal.style.display = 'none';
+        });
+
+        muteConfirmBtn.addEventListener('click', () => {
+            const nick = muteInput.value.trim();
+            if (nick) {
+                muteUser(nick);
+                muteModal.style.display = 'none';
+            }
+        });
+        muteModalClose.addEventListener('click', () => muteModal.style.display = 'none');
+        muteInput.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter') {
+                const nick = muteInput.value.trim();
+                if (nick) {
+                    muteUser(nick);
+                    muteModal.style.display = 'none';
+                }
+            }
+        });
+
+        // ==========================================
+        // 16. СТАРТ
+        // ==========================================
+        loadTheme();
+        loadBanned();
+        loadRules();
+        loadMessages();
+        if (messageContainer.querySelectorAll('.message').length === 0) {
+            addMessageToDOM('SYSTEM', 'Добро пожаловать в Terminal v1.3 DEMO!', getCurrentTime(), null, false);
+        }
+        msgInput.focus();
+        console.log('✅ Terminal v1.3 DEMO запущен!');
+        console.log('🔑 Админ-пароль: admin123');
+        console.log('📋 Команды админа: /rules [текст], /mute [ник], /unmute [ник]');
+    </script>
+</body>
+</html>
